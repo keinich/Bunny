@@ -10,6 +10,8 @@ namespace Bunny {
     Win32Application();
     ~Win32Application();
 
+    static HWND GetHwnd();
+
     void static CreateWindowHandle();
     void static Run();
 

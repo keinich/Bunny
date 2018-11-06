@@ -17,7 +17,8 @@ namespace Bunny {
   void Application::Run()
   {
     //D3D12HelloTriangle::
-    D3D12HelloTriangle::Run();
+    DirectX12::D3D12HelloTriangle test;
+    test.Run();
     while (true);
   }
 

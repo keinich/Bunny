@@ -14,6 +14,11 @@ namespace Bunny {
   {
   }
 
+  HWND Win32Application::GetHwnd()
+  {
+    return m_hWnd;
+  }
+
   void Win32Application::CreateWindowHandle()
   {
     HINSTANCE hInstance = GetModuleHandle(NULL);

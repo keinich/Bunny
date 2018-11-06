@@ -20,7 +20,10 @@
     <ClInclude Include="src\Bunny\Win32\Win32Application.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Bunny\DirectX12\D3D12HelloTriangle.cpp" />
     <ClCompile Include="src\Bunny\DirectX12\D3D12HelloTriangle.h" />
+    <ClCompile Include="src\Bunny\Helpers.cpp" />
+    <ClCompile Include="src\Bunny\Helpers.h" />
     <ClCompile Include="src\Bunny\Log.cpp" />
     <ClCompile Include="src\Bunny\Application.cpp" />
     <ClCompile Include="src\Bunny\Win32\Win32Application.cpp" />
