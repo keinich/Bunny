@@ -9,6 +9,7 @@
 #include <d3d12.h>
 #include <DirectXMath.h>
 #include <dxgi1_4.h>
+#include <d3dcompiler.h>
 
 //Bunny Includes
 #include "d3dx12.h"
@@ -110,7 +111,7 @@ namespace Bunny {
 
           m_rtvDescriptorSize = s_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-         }
+        }
 
         //frame resources
         {
@@ -154,7 +155,31 @@ namespace Bunny {
 
       void LoadAssets()
       {
+        // root signature
+        {
+          CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc;
+          rootSignatureDesc.Init(0, nullptr, 0, nullptr, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
+          ComPtr<ID3DBlob> signature;
+          ComPtr<ID3DBlob> error;
+          Helpers::ThrowIfFailed(D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, &signature, &error));
+          Helpers::ThrowIfFailed(s_device->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&m_rootSignature)));
+        }
+
+        //pipeline state
+        {
+          ComPtr<ID3DBlob> vertexShader;
+          ComPtr<ID3DBlob> pixelShader;
+
+#if defined (_DEBUG)
+          UINT compilerFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
+#else
+          UNIT complierFlags = 0;
+#endif
+
+          Helpers::ThrowIfFailed(D3DCompileFromFile(L"D:\\Raftek\\Bunny\\Bunny\\src\\Bunny\\DirectX12\\Shaders\\shaders.hlsl", nullptr, nullptr, "VSMain", "vs_5_0", compilerFlags, 0, &vertexShader, nullptr));
+          Helpers::ThrowIfFailed(D3DCompileFromFile(L"D:\\Raftek\\Bunny\\Bunny\\src\\Bunny\\DirectX12\\Shaders\\shaders.hlsl", nullptr, nullptr, "PSMain", "ps_5_0", compilerFlags, 0, &pixelShader, nullptr));
+        }
       }
 
       ComPtr<ID3D12Device> s_device;
@@ -165,6 +190,7 @@ namespace Bunny {
       UINT m_frameIndex;
       ComPtr<ID3D12Resource> m_renderTargets[2]; //FrameCount
       ComPtr<ID3D12CommandAllocator> m_commandAllocator;
+      ComPtr<ID3D12RootSignature> m_rootSignature;
 
     };
   }
