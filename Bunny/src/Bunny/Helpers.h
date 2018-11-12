@@ -1,5 +1,7 @@
 #pragma once
 
+#include <comdef.h>
+
 //Windows Includes
 #include <windows.h>
 #include <wrl.h>
@@ -28,5 +30,7 @@ namespace Bunny {
 
     void ThrowIfFailed(HRESULT hr);
 
+    char* ToCharStar(WCHAR* widecharstar);
+    
   }
 }

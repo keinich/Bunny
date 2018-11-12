@@ -47,9 +47,11 @@ void D3D12HelloTriangle::LoadPipeline()
   }
 #endif
 
+  // factory
   ComPtr<IDXGIFactory4> factory;
   ThrowIfFailed(CreateDXGIFactory2(dxgiFactoryFlags, IID_PPV_ARGS(&factory)));
 
+  // device
   if (m_useWarpDevice)
   {
     ComPtr<IDXGIAdapter> warpAdapter;
@@ -94,11 +96,11 @@ void D3D12HelloTriangle::LoadPipeline()
   ThrowIfFailed(factory->CreateSwapChainForHwnd(
     m_commandQueue.Get(),        // Swap chain needs the queue so that it can force a flush on it.
     Bunny::Win32Application::GetHwnd(),
-      &swapChainDesc,
-      nullptr,
-      nullptr,
-      &swapChain
-      ));
+    &swapChainDesc,
+    nullptr,
+    nullptr,
+    &swapChain
+  ));
 
   // This sample does not support fullscreen transitions.
   ThrowIfFailed(factory->MakeWindowAssociation(Bunny::Win32Application::GetHwnd(), DXGI_MWA_NO_ALT_ENTER));

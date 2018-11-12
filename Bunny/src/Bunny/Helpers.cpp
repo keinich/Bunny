@@ -9,5 +9,11 @@ namespace Bunny {
         throw HrException(hr);
       }
     }
+    char * ToCharStar(WCHAR* widecharstar)
+    {
+      _bstr_t b(widecharstar);
+      char* r = b;
+      return r;
+    }
   }
 }
