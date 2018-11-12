@@ -1,5 +1,6 @@
 #include <string>
 #include "Win32Application.h"
+#include "../DirectX12/D3D12HelloTriangle.h"
 
 namespace Bunny {
 
@@ -19,7 +20,7 @@ namespace Bunny {
     return m_hWnd;
   }
 
-  void Win32Application::CreateWindowHandle()
+  void Win32Application::CreateWindowHandle(Bunny::DirectX12::D3D12HelloTriangle* app)
   {
     HINSTANCE hInstance = GetModuleHandle(NULL);
 
@@ -46,7 +47,7 @@ namespace Bunny {
       nullptr,
       nullptr,
       hInstance,
-      nullptr //TODO what is this param?
+      app //TODO what is this param?
     );
   }
 
@@ -66,13 +67,23 @@ namespace Bunny {
 
   LRESULT Win32Application::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
   {
+    Bunny::DirectX12::D3D12HelloTriangle* app = reinterpret_cast<Bunny::DirectX12::D3D12HelloTriangle*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+
     switch (message)
     {
     case WM_CREATE:
     {
-
+      LPCREATESTRUCT pCreateStruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
+      SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pCreateStruct->lpCreateParams));
     }
     return 0;
+    case WM_PAINT:
+      if (app)
+      {
+        //app->OnUpdate();
+        app->OnRender();
+      }
+      return 0;
     }
 
     return DefWindowProc(hWnd, message, wParam, lParam);

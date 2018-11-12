@@ -5,6 +5,8 @@
 
 namespace Bunny {
 
+  namespace DirectX12 { class D3D12HelloTriangle; }
+
   class Win32Application {
   public:
     Win32Application();
@@ -12,7 +14,7 @@ namespace Bunny {
 
     static HWND GetHwnd();
 
-    void static CreateWindowHandle();
+    void static CreateWindowHandle(class Bunny::DirectX12::D3D12HelloTriangle* app);
     void static Run();
 
   protected:

@@ -10,6 +10,9 @@
     <Filter Include="Bunny\Win32">
       <UniqueIdentifier>{F3CC318E-5F82-AA83-E876-A45A542BA187}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bunny\DirectX12\Tut_D3D12HelloTriangle">
+      <UniqueIdentifier>{8351af82-6b85-44a9-a6de-fad2173c5dbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Bunny.h" />
@@ -54,5 +57,8 @@
     <ClCompile Include="src\Bunny\Win32\Win32Application.cpp">
       <Filter>Bunny\Win32</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="src\Bunny\DirectX12\Shaders\shaders.hlsl" />
   </ItemGroup>
 </Project>

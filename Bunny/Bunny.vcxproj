@@ -163,6 +163,13 @@
     <ClCompile Include="src\Bunny\Log.cpp" />
     <ClCompile Include="src\Bunny\Win32\Win32Application.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="src\Bunny\DirectX12\Shaders\shaders.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </FxCompile>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
