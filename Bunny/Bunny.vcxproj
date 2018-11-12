@@ -149,10 +149,8 @@
     <ClInclude Include="src\Bunny.h" />
     <ClInclude Include="src\Bunny\Application.h" />
     <ClInclude Include="src\Bunny\Core.h" />
-    <ClInclude Include="src\Bunny\DirectX12\D3D12HelloTriangle1.h" />
     <ClInclude Include="src\Bunny\DirectX12\d3dx12.h" />
     <ClInclude Include="src\Bunny\DirectX12\TUT\D3D12HelloTriangle.h" />
-    <ClInclude Include="src\Bunny\DirectX12\TUT\d3dx12.h" />
     <ClInclude Include="src\Bunny\DirectX12\TUT\DXSample.h" />
     <ClInclude Include="src\Bunny\DirectX12\TUT\DXSampleHelper.h" />
     <ClInclude Include="src\Bunny\DirectX12\TUT\stdafx.h" />
@@ -163,7 +161,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bunny\Application.cpp" />
-    <ClCompile Include="src\Bunny\DirectX12\D3D12HelloTriangle1.cpp" />
     <ClCompile Include="src\Bunny\DirectX12\TUT\D3D12HelloTriangle.cpp" />
     <ClCompile Include="src\Bunny\DirectX12\TUT\DXSample.cpp" />
     <ClCompile Include="src\Bunny\Helpers.cpp" />

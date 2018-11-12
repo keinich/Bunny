@@ -1,7 +1,7 @@
 #include "Application.h"
 
 //D3D12 Test
-#include "DirectX12/D3D12HelloTriangle1.h"
+#include "DirectX12/TUT/D3D12HelloTriangle.h"
 
 namespace Bunny {
 
@@ -16,9 +16,13 @@ namespace Bunny {
 
   void Application::Run()
   {
-    //D3D12HelloTriangle::
-    DirectX12::D3D12HelloTriangle1 test;
-    test.Run();
+
+    D3D12HelloTriangle sample(1280, 720, L"D3D12 Hello Triangle");
+
+    Win32Application::CreateWindowHandle(&sample);
+    sample.OnInit();
+    Win32Application::Run();
+
     while (true);
   }
 

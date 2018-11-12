@@ -40,11 +40,7 @@
     <ClInclude Include="src\Bunny\DirectX12\TUT\D3D12HelloTriangle.h" />
     <ClInclude Include="src\Bunny\DirectX12\TUT\DXSample.h" />
     <ClInclude Include="src\Bunny\DirectX12\TUT\DXSampleHelper.h" />
-    <ClInclude Include="src\Bunny\DirectX12\TUT\d3dx12.h" />
     <ClInclude Include="src\Bunny\DirectX12\TUT\stdafx.h" />
-    <ClInclude Include="src\Bunny\DirectX12\D3D12HelloTriangle1.h">
-      <Filter>Bunny\DirectX12</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bunny\Application.cpp">
@@ -61,9 +57,6 @@
     </ClCompile>
     <ClCompile Include="src\Bunny\DirectX12\TUT\D3D12HelloTriangle.cpp" />
     <ClCompile Include="src\Bunny\DirectX12\TUT\DXSample.cpp" />
-    <ClCompile Include="src\Bunny\DirectX12\D3D12HelloTriangle1.cpp">
-      <Filter>Bunny\DirectX12</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Bunny\DirectX12\Shaders\shaders.hlsl" />
