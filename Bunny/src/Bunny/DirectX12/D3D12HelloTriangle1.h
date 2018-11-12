@@ -20,20 +20,17 @@
 //using namespace DirectX;
 using namespace Microsoft::WRL;
 
+
 namespace Bunny {
   namespace DirectX12 {
 
 
-    class D3D12HelloTriangle {
+    class D3D12HelloTriangle1 {
 
     public:
 
-      void Run() {
-        Win32Application::CreateWindowHandle(this);
-        LoadPipeline();
-        LoadAssets();
-        Win32Application::Run();
-      }
+      void Run();
+        
 
       void OnRender()
       {

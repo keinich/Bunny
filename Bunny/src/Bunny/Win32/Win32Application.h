@@ -3,9 +3,9 @@
 #include <windows.h>
 //#include <wrl.h>
 
-namespace Bunny {
+class D3D12HelloTriangle;
 
-  namespace DirectX12 { class D3D12HelloTriangle; }
+namespace Bunny { 
 
   class Win32Application {
   public:
@@ -14,7 +14,7 @@ namespace Bunny {
 
     static HWND GetHwnd();
 
-    void static CreateWindowHandle(class Bunny::DirectX12::D3D12HelloTriangle* app);
+    void static CreateWindowHandle(D3D12HelloTriangle* app);
     void static Run();
 
   protected:

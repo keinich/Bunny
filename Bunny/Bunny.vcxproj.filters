@@ -22,9 +22,6 @@
     <ClInclude Include="src\Bunny\Core.h">
       <Filter>Bunny</Filter>
     </ClInclude>
-    <ClInclude Include="src\Bunny\DirectX12\D3D12HelloTriangle.h">
-      <Filter>Bunny\DirectX12</Filter>
-    </ClInclude>
     <ClInclude Include="src\Bunny\DirectX12\d3dx12.h">
       <Filter>Bunny\DirectX12</Filter>
     </ClInclude>
@@ -40,13 +37,18 @@
     <ClInclude Include="src\Bunny\Win32\Win32Application.h">
       <Filter>Bunny\Win32</Filter>
     </ClInclude>
+    <ClInclude Include="src\Bunny\DirectX12\TUT\D3D12HelloTriangle.h" />
+    <ClInclude Include="src\Bunny\DirectX12\TUT\DXSample.h" />
+    <ClInclude Include="src\Bunny\DirectX12\TUT\DXSampleHelper.h" />
+    <ClInclude Include="src\Bunny\DirectX12\TUT\d3dx12.h" />
+    <ClInclude Include="src\Bunny\DirectX12\TUT\stdafx.h" />
+    <ClInclude Include="src\Bunny\DirectX12\D3D12HelloTriangle1.h">
+      <Filter>Bunny\DirectX12</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bunny\Application.cpp">
       <Filter>Bunny</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Bunny\DirectX12\D3D12HelloTriangle.cpp">
-      <Filter>Bunny\DirectX12</Filter>
     </ClCompile>
     <ClCompile Include="src\Bunny\Helpers.cpp">
       <Filter>Bunny</Filter>
@@ -57,8 +59,14 @@
     <ClCompile Include="src\Bunny\Win32\Win32Application.cpp">
       <Filter>Bunny\Win32</Filter>
     </ClCompile>
+    <ClCompile Include="src\Bunny\DirectX12\TUT\D3D12HelloTriangle.cpp" />
+    <ClCompile Include="src\Bunny\DirectX12\TUT\DXSample.cpp" />
+    <ClCompile Include="src\Bunny\DirectX12\D3D12HelloTriangle1.cpp">
+      <Filter>Bunny\DirectX12</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Bunny\DirectX12\Shaders\shaders.hlsl" />
+    <FxCompile Include="src\Bunny\DirectX12\TUT\shaders.hlsl" />
   </ItemGroup>
 </Project>
