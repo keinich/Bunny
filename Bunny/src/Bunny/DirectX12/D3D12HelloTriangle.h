@@ -13,8 +13,8 @@
 
 //Bunny Includes
 #include "d3dx12.h"
-#include "src\Bunny\Helpers.h"
-#include "src\Bunny\Win32\Win32Application.h"
+#include "..\Helpers.h"
+#include "..\Win32\Win32Application.h"
 
 //using namespace DirectX;
 using namespace Microsoft::WRL;
