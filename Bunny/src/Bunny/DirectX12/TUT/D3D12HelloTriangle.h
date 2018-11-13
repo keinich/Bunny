@@ -65,7 +65,11 @@ private:
     ComPtr<ID3D12Fence> m_fence;
     UINT64 m_fenceValue;
 
+    bool m_bTypedUAVLoadSupport_R11G11B10_FLOAT;
+
     void LoadPipeline();
+    void CheckTypedLoadUavSupport();
+    void CreateInfoQueue();
     void LoadAssets();
     void PopulateCommandList();
     void WaitForPreviousFrame();

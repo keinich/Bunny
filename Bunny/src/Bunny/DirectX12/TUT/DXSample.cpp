@@ -9,7 +9,7 @@
 //
 //*********************************************************
 
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "DXSample.h"
 
 #include "../../Log.h"
@@ -67,7 +67,7 @@ void DXSample::GetHardwareAdapter(IDXGIFactory2* pFactory, IDXGIAdapter1** ppAda
     if (desc.DedicatedVideoMemory > MaxSize && SUCCEEDED(D3D12CreateDevice(adapter.Get(), D3D_FEATURE_LEVEL_11_0, _uuidof(ID3D12Device), nullptr)))
     {
       BN_CORE_INFO("D3D12-capable hardware found: {0} ({1} MB)", Bunny::Helpers::ToCharStar(L"TEST TEST"), desc.DedicatedVideoMemory >> 20);
-      MaxSize = desc.DedicatedVideoMemory;      
+      MaxSize = desc.DedicatedVideoMemory;
     }
   }
 

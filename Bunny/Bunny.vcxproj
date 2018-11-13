@@ -146,6 +146,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Bunny\DirectX12\CommandAllocatorPool.h" />
+    <ClInclude Include="src\Bunny\DirectX12\CommandQueue.h" />
     <ClInclude Include="src\Bunny.h" />
     <ClInclude Include="src\Bunny\Application.h" />
     <ClInclude Include="src\Bunny\Core.h" />
@@ -153,13 +155,15 @@
     <ClInclude Include="src\Bunny\DirectX12\TUT\D3D12HelloTriangle.h" />
     <ClInclude Include="src\Bunny\DirectX12\TUT\DXSample.h" />
     <ClInclude Include="src\Bunny\DirectX12\TUT\DXSampleHelper.h" />
-    <ClInclude Include="src\Bunny\DirectX12\TUT\stdafx.h" />
+    <ClInclude Include="src\Bunny\DirectX12\stdafx.h" />
     <ClInclude Include="src\Bunny\EntryPoint.h" />
     <ClInclude Include="src\Bunny\Helpers.h" />
     <ClInclude Include="src\Bunny\Log.h" />
     <ClInclude Include="src\Bunny\Win32\Win32Application.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Bunny\DirectX12\CommandAllocatorPool.cpp" />
+    <ClCompile Include="src\Bunny\DirectX12\CommandQueue.cpp" />
     <ClCompile Include="src\Bunny\Application.cpp" />
     <ClCompile Include="src\Bunny\DirectX12\TUT\D3D12HelloTriangle.cpp" />
     <ClCompile Include="src\Bunny\DirectX12\TUT\DXSample.cpp" />
