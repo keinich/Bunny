@@ -13,6 +13,7 @@
 #include "D3D12HelloTriangle.h"
 #include "DX12Core.h"
 #include "CommandListManager.h"
+#include "GraphicsCore.h"
 
 D3D12HelloTriangle::D3D12HelloTriangle(UINT width, UINT height, std::wstring name) :
   DXSample(width, height, name),
@@ -96,11 +97,16 @@ void D3D12HelloTriangle::LoadPipeline()
 // Describe and create the swap chain.
   DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
   swapChainDesc.BufferCount = FrameCount;
-  swapChainDesc.Width = m_width;
-  swapChainDesc.Height = m_height;
-  swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+  swapChainDesc.Width = Bunny::Graphics::Core::g_DisplayWidth;
+  swapChainDesc.Height = Bunny::Graphics::Core::g_DisplayHeight;
+  swapChainDesc.Format = DXGI_FORMAT_R10G10B10A2_UNORM;
+  swapChainDesc.Scaling = DXGI_SCALING_NONE;
+  swapChainDesc.SampleDesc.Quality = 0;
+  swapChainDesc.SampleDesc.Count = 1;
   swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-  swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+  //swapChainDesc.BufferCount = 3;
+  swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+  swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
   swapChainDesc.SampleDesc.Count = 1;
 
   ComPtr<IDXGISwapChain1> swapChain;
