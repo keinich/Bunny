@@ -5,8 +5,7 @@
 
 namespace Bunny {
 
-  class BUNNY_API Log
-  {
+  class BUNNY_API Log {
   public:
     static void Init();
 

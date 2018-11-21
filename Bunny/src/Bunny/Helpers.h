@@ -8,6 +8,7 @@
 #include <winerror.h>
 
 #include "DirectX12/d3dx12.h"
+#include "Log.h"
 
 namespace Bunny {
   namespace Helpers {
@@ -34,3 +35,40 @@ namespace Bunny {
     
   }
 }
+
+#ifdef RELEASE
+
+#define ASSERT( isTrue, ... ) (void)(isTrue)
+#define WARN_ONCE_IF( isTrue, ... ) (void)(isTrue)
+#define WARN_ONCE_IF_NOT( isTrue, ... ) (void)(isTrue)
+#define DEBUGPRINT( msg, ... ) do {} while(0)
+
+#else    // !RELEASE
+
+#define STRINGIFY(x) #x
+#define STRINGIFY_BUILTIN(x) STRINGIFY(x)
+#define ASSERT( isFalse, ... ) \
+        if (!(bool)(isFalse)) { \
+            BN_CORE_FATAL("test"); \
+            __debugbreak(); \
+        }
+
+#define ASSERT_SUCCEEDED( hr, ... ) \
+        if (FAILED(hr)) { \
+            BN_CORE_FATAL("test"); \
+            __debugbreak(); \
+        }
+
+
+#define WARN_ONCE_IF( isTrue, ... ) \
+    { \
+        static bool s_TriggeredWarning = false; \
+        if ((bool)(isTrue) && !s_TriggeredWarning) { \
+            s_TriggeredWarning = true; \
+            BN_CORE_WARN(__VA_ARGS__); \
+        } \
+    }
+
+#define WARN_ONCE_IF_NOT( isTrue, ... ) WARN_ONCE_IF(!(isTrue), __VA_ARGS__)
+
+#endif

@@ -2,50 +2,47 @@
 #include "CommandAllocatorPool.h"
 
 namespace Bunny {
+  namespace DirectX12 {
+    class CommandQueue {
+      friend class CommandListManager;
+    public:
+      CommandQueue(D3D12_COMMAND_LIST_TYPE Type);
+      ~CommandQueue();
 
-  class CommandQueue
-  {
-  public:
-    CommandQueue(D3D12_COMMAND_LIST_TYPE Type);
-    ~CommandQueue();
+      void Create(ID3D12Device* pDevice);
+      void Shutdown();
 
-    void Create(ID3D12Device* pDevice);
-    void Shutdown();
+      inline bool IsReady() { return commandQueue_ != nullptr; }
 
-    inline bool IsReady()
-    {
-      return m_CommandQueue != nullptr;
-    }
+      uint64_t IncrementFence(void);
+      bool IsFenceComplete(uint64_t FenceValue);
+      void StallForFence(uint64_t FenceValue);
+      void StallForProducer(CommandQueue& Producer);
+      void WaitForFence(uint64_t FenceValue);
+      void WaitForIdle(void) { WaitForFence(IncrementFence()); }
 
-    uint64_t IncrementFence(void);
-    bool IsFenceComplete(uint64_t FenceValue);
-    void StallForFence(uint64_t FenceValue);
-    void StallForProducer(CommandQueue& Producer);
-    void WaitForFence(uint64_t FenceValue);
-    void WaitForIdle(void) { WaitForFence(IncrementFence()); }
+      ID3D12CommandQueue* GetCommandQueue() { return commandQueue_; }
 
-    ID3D12CommandQueue* GetCommandQueue() { return m_CommandQueue; }
+      uint64_t GetNextFenceValue() { return nextFenceValue_; }
 
-    uint64_t GetNextFenceValue() { return m_NextFenceValue; }
+    private:
 
-  private:
+      uint64_t ExecuteCommandList(ID3D12CommandList* List);
+      ID3D12CommandAllocator* RequestAllocator(void);
+      void DiscardAllocator(uint64_t FenceValueForReset, ID3D12CommandAllocator* Allocator);
 
-    uint64_t ExecuteCommandList(ID3D12CommandList* List);
-    ID3D12CommandAllocator* RequestAllocator(void);
-    void DiscardAllocator(uint64_t FenceValueForReset, ID3D12CommandAllocator* Allocator);
+      ID3D12CommandQueue* commandQueue_;
 
-    ID3D12CommandQueue* m_CommandQueue;
+      const D3D12_COMMAND_LIST_TYPE type_;
 
-    const D3D12_COMMAND_LIST_TYPE m_Type;
+      CommandAllocatorPool allocatorPool_;
+      std::mutex fenceMutex_;
+      std::mutex eventMutex_;
 
-    CommandAllocatorPool m_AllocatorPool;
-    std::mutex m_FenceMutex;
-    std::mutex m_EventMutex;
-
-    ID3D12Fence* m_pFence;
-    uint64_t m_NextFenceValue;
-    uint64_t m_LastCompletedFenceValue;
-    HANDLE m_FenceEventHandle;
-  };
-
+      ID3D12Fence* pFence_;
+      uint64_t nextFenceValue_;
+      uint64_t lastCompletedFenceValue_;
+      HANDLE fenceEventHandle_;
+    };
+  }
 }

@@ -59,6 +59,8 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\Bunny\</IntDir>
     <TargetName>Bunny</TargetName>
     <TargetExt>.dll</TargetExt>
+    <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -84,6 +86,7 @@
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -146,6 +149,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Bunny\DirectX12\DX12Core.h" />
+    <ClInclude Include="src\Bunny\DirectX12\CommandListManager.h" />
     <ClInclude Include="src\Bunny\DirectX12\CommandAllocatorPool.h" />
     <ClInclude Include="src\Bunny\DirectX12\CommandQueue.h" />
     <ClInclude Include="src\Bunny.h" />
@@ -162,6 +167,8 @@
     <ClInclude Include="src\Bunny\Win32\Win32Application.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Bunny\DirectX12\DX12Core.cpp" />
+    <ClCompile Include="src\Bunny\DirectX12\CommandListManager.cpp" />
     <ClCompile Include="src\Bunny\DirectX12\CommandAllocatorPool.cpp" />
     <ClCompile Include="src\Bunny\DirectX12\CommandQueue.cpp" />
     <ClCompile Include="src\Bunny\Application.cpp" />
