@@ -9,10 +9,10 @@
 //
 //*********************************************************
 
-#include "../stdafx.h"
+#include "stdafx.h"
 #include "D3D12HelloTriangle.h"
-#include "../DX12Core.h"
-#include "../CommandListManager.h"
+#include "DX12Core.h"
+#include "CommandListManager.h"
 
 D3D12HelloTriangle::D3D12HelloTriangle(UINT width, UINT height, std::wstring name) :
   DXSample(width, height, name),
@@ -21,10 +21,6 @@ D3D12HelloTriangle::D3D12HelloTriangle(UINT width, UINT height, std::wstring nam
   m_scissorRect(0, 0, static_cast<LONG>(width), static_cast<LONG>(height)),
   m_rtvDescriptorSize(0)
 {
-}
-
-D3D12HelloTriangle::~D3D12HelloTriangle() {
-  Bunny::DirectX12::DX12Core::g_CommandManager.Shutdown();
 }
 
 void D3D12HelloTriangle::OnInit()
@@ -93,7 +89,7 @@ void D3D12HelloTriangle::LoadPipeline()
   queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
   queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
 
-  Bunny::DirectX12::DX12Core::g_CommandManager.Create(m_device.Get());
+  Bunny::Graphics::DX12::Core::g_CommandManager.Create(m_device.Get());
 
   //ThrowIfFailed(m_device->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&m_commandQueue)));
 
@@ -109,7 +105,7 @@ void D3D12HelloTriangle::LoadPipeline()
 
   ComPtr<IDXGISwapChain1> swapChain;
   ThrowIfFailed(factory->CreateSwapChainForHwnd(
-    Bunny::DirectX12::DX12Core::g_CommandManager.GetCommandQueue(),        // Swap chain needs the queue so that it can force a flush on it.
+    Bunny::Graphics::DX12::Core::g_CommandManager.GetCommandQueue(),        // Swap chain needs the queue so that it can force a flush on it.
     Bunny::Win32Application::GetHwnd(),
     &swapChainDesc,
     nullptr,
@@ -358,7 +354,7 @@ void D3D12HelloTriangle::OnRender()
 
   // Execute the command list.
   ID3D12CommandList* ppCommandLists[] = { m_commandList.Get() };  
-  Bunny::DirectX12::DX12Core::g_CommandManager.GetCommandQueue()->ExecuteCommandLists(_countof(ppCommandLists), ppCommandLists);
+  Bunny::Graphics::DX12::Core::g_CommandManager.GetCommandQueue()->ExecuteCommandLists(_countof(ppCommandLists), ppCommandLists);
 
   // Present the frame.
   ThrowIfFailed(m_swapChain->Present(1, 0));
@@ -420,7 +416,7 @@ void D3D12HelloTriangle::WaitForPreviousFrame()
 
   // Signal and increment the fence value.
   const UINT64 fence = m_fenceValue;
-  ThrowIfFailed(Bunny::DirectX12::DX12Core::g_CommandManager.GetCommandQueue()->Signal(m_fence.Get(), fence));
+  ThrowIfFailed(Bunny::Graphics::DX12::Core::g_CommandManager.GetCommandQueue()->Signal(m_fence.Get(), fence));
   m_fenceValue++;
 
   // Wait until the previous frame is finished.

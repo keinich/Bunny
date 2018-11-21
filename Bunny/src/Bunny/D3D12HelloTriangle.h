@@ -26,8 +26,7 @@ class D3D12HelloTriangle : public DXSample
 {
 public:
   D3D12HelloTriangle(UINT width, UINT height, std::wstring name);
-  ~D3D12HelloTriangle(); 
-
+  
   virtual void OnInit();
   virtual void OnUpdate();
   virtual void OnRender();

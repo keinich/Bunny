@@ -7,7 +7,6 @@
 #include <wrl.h>
 #include <winerror.h>
 
-#include "DirectX12/d3dx12.h"
 #include "Log.h"
 
 namespace Bunny {

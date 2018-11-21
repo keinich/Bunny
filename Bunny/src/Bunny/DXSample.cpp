@@ -9,11 +9,11 @@
 //
 //*********************************************************
 
-#include "../stdafx.h"
+#include "stdafx.h"
 #include "DXSample.h"
 
-#include "../../Log.h"
-#include "../../Helpers.h"
+#include "Log.h"
+#include "Helpers.h"
 
 using namespace Microsoft::WRL;
 

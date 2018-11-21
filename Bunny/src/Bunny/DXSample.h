@@ -12,7 +12,7 @@
 #pragma once
 
 #include "DXSampleHelper.h"
-#include "../../Win32/Win32Application.h"
+#include "Win32Application.h"
 
 class DXSample
 {

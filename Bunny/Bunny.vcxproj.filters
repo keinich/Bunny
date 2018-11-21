@@ -4,26 +4,22 @@
     <Filter Include="Bunny">
       <UniqueIdentifier>{515CEB0C-BD70-13BE-86F2-B61DF2C50FEF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Bunny\DirectX12">
-      <UniqueIdentifier>{56576BC2-C2E2-D886-CBF3-5B7B37FE3487}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Bunny\Win32">
       <UniqueIdentifier>{F3CC318E-5F82-AA83-E876-A45A542BA187}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Bunny\DirectX12\Tut_D3D12HelloTriangle">
+    <Filter Include="Bunny\Graphics">
+      <UniqueIdentifier>{222effc9-0c36-463e-afd1-40bd0f659022}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bunny\Graphics\DirectX12">
+      <UniqueIdentifier>{56576BC2-C2E2-D886-CBF3-5B7B37FE3487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bunny\Graphics\DirectX12\Tut_D3D12HelloTriangle">
       <UniqueIdentifier>{8351af82-6b85-44a9-a6de-fad2173c5dbd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Bunny.h" />
-    <ClInclude Include="src\Bunny\Application.h">
-      <Filter>Bunny</Filter>
-    </ClInclude>
     <ClInclude Include="src\Bunny\Core.h">
       <Filter>Bunny</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Bunny\DirectX12\d3dx12.h">
-      <Filter>Bunny\DirectX12</Filter>
     </ClInclude>
     <ClInclude Include="src\Bunny\EntryPoint.h">
       <Filter>Bunny</Filter>
@@ -34,40 +30,82 @@
     <ClInclude Include="src\Bunny\Log.h">
       <Filter>Bunny</Filter>
     </ClInclude>
-    <ClInclude Include="src\Bunny\Win32\Win32Application.h">
+    <ClInclude Include="src\Bunny\Application.h">
+      <Filter>Bunny</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\GraphicsCore.h">
+      <Filter>Bunny\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\DX12Core.h">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\CommandQueue.h">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\CommandListManager.h">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\CommandAllocatorPool.h">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\D3D12HelloTriangle.h">
+      <Filter>Bunny\Graphics\DirectX12\Tut_D3D12HelloTriangle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\DXSample.h">
+      <Filter>Bunny\Graphics\DirectX12\Tut_D3D12HelloTriangle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\DXSampleHelper.h">
+      <Filter>Bunny\Graphics\DirectX12\Tut_D3D12HelloTriangle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\Bunny.h">
+      <Filter>Bunny</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\stdafx.h">
+      <Filter>Bunny</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\d3dx12.h">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\Win32Application.h">
       <Filter>Bunny\Win32</Filter>
     </ClInclude>
-    <ClInclude Include="src\Bunny\DirectX12\TUT\D3D12HelloTriangle.h" />
-    <ClInclude Include="src\Bunny\DirectX12\TUT\DXSample.h" />
-    <ClInclude Include="src\Bunny\DirectX12\TUT\DXSampleHelper.h" />
-    <ClInclude Include="src\Bunny\DirectX12\CommandQueue.h" />
-    <ClInclude Include="src\Bunny\DirectX12\stdafx.h" />
-    <ClInclude Include="src\Bunny\DirectX12\CommandAllocatorPool.h" />
-    <ClInclude Include="src\Bunny\DirectX12\CommandListManager.h" />
-    <ClInclude Include="src\Bunny\DirectX12\DX12Core.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Bunny\Application.cpp">
-      <Filter>Bunny</Filter>
-    </ClCompile>
     <ClCompile Include="src\Bunny\Helpers.cpp">
       <Filter>Bunny</Filter>
     </ClCompile>
     <ClCompile Include="src\Bunny\Log.cpp">
       <Filter>Bunny</Filter>
     </ClCompile>
-    <ClCompile Include="src\Bunny\Win32\Win32Application.cpp">
+    <ClCompile Include="src\Bunny\Application.cpp">
+      <Filter>Bunny</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\GraphicsCore.cpp">
+      <Filter>Bunny\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\DX12Core.cpp">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\CommandQueue.cpp">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\CommandListManager.cpp">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\CommandAllocatorPool.cpp">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\D3D12HelloTriangle.cpp">
+      <Filter>Bunny\Graphics\DirectX12\Tut_D3D12HelloTriangle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\DXSample.cpp">
+      <Filter>Bunny\Graphics\DirectX12\Tut_D3D12HelloTriangle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\Win32Application.cpp">
       <Filter>Bunny\Win32</Filter>
     </ClCompile>
-    <ClCompile Include="src\Bunny\DirectX12\TUT\D3D12HelloTriangle.cpp" />
-    <ClCompile Include="src\Bunny\DirectX12\TUT\DXSample.cpp" />
-    <ClCompile Include="src\Bunny\DirectX12\CommandQueue.cpp" />
-    <ClCompile Include="src\Bunny\DirectX12\CommandAllocatorPool.cpp" />
-    <ClCompile Include="src\Bunny\DirectX12\CommandListManager.cpp" />
-    <ClCompile Include="src\Bunny\DirectX12\DX12Core.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="src\Bunny\DirectX12\Shaders\shaders.hlsl" />
     <FxCompile Include="src\Bunny\DirectX12\TUT\shaders.hlsl" />
   </ItemGroup>
 </Project>

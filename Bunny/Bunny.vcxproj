@@ -60,7 +60,7 @@
     <TargetName>Bunny</TargetName>
     <TargetExt>.dll</TargetExt>
     <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -86,7 +86,7 @@
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <EnablePREfast>true</EnablePREfast>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,45 +149,40 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Bunny\DirectX12\DX12Core.h" />
-    <ClInclude Include="src\Bunny\DirectX12\CommandListManager.h" />
-    <ClInclude Include="src\Bunny\DirectX12\CommandAllocatorPool.h" />
-    <ClInclude Include="src\Bunny\DirectX12\CommandQueue.h" />
-    <ClInclude Include="src\Bunny.h" />
+    <ClInclude Include="src\Bunny\GraphicsCore.h" />
+    <ClInclude Include="src\Bunny\DX12Core.h" />
+    <ClInclude Include="src\Bunny\CommandListManager.h" />
+    <ClInclude Include="src\Bunny\CommandAllocatorPool.h" />
+    <ClInclude Include="src\Bunny\CommandQueue.h" />
+    <ClInclude Include="src\Bunny\Bunny.h" />
     <ClInclude Include="src\Bunny\Application.h" />
     <ClInclude Include="src\Bunny\Core.h" />
-    <ClInclude Include="src\Bunny\DirectX12\d3dx12.h" />
-    <ClInclude Include="src\Bunny\DirectX12\TUT\D3D12HelloTriangle.h" />
-    <ClInclude Include="src\Bunny\DirectX12\TUT\DXSample.h" />
-    <ClInclude Include="src\Bunny\DirectX12\TUT\DXSampleHelper.h" />
-    <ClInclude Include="src\Bunny\DirectX12\stdafx.h" />
+    <ClInclude Include="src\Bunny\d3dx12.h" />
+    <ClInclude Include="src\Bunny\D3D12HelloTriangle.h" />
+    <ClInclude Include="src\Bunny\DXSample.h" />
+    <ClInclude Include="src\Bunny\DXSampleHelper.h" />
+    <ClInclude Include="src\Bunny\stdafx.h" />
     <ClInclude Include="src\Bunny\EntryPoint.h" />
     <ClInclude Include="src\Bunny\Helpers.h" />
     <ClInclude Include="src\Bunny\Log.h" />
-    <ClInclude Include="src\Bunny\Win32\Win32Application.h" />
+    <ClInclude Include="src\Bunny\Win32Application.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Bunny\DirectX12\DX12Core.cpp" />
-    <ClCompile Include="src\Bunny\DirectX12\CommandListManager.cpp" />
-    <ClCompile Include="src\Bunny\DirectX12\CommandAllocatorPool.cpp" />
-    <ClCompile Include="src\Bunny\DirectX12\CommandQueue.cpp" />
+    <ClCompile Include="src\Bunny\GraphicsCore.cpp" />
+    <ClCompile Include="src\Bunny\DX12Core.cpp" />
+    <ClCompile Include="src\Bunny\CommandListManager.cpp" />
+    <ClCompile Include="src\Bunny\CommandAllocatorPool.cpp" />
+    <ClCompile Include="src\Bunny\CommandQueue.cpp" />
     <ClCompile Include="src\Bunny\Application.cpp" />
-    <ClCompile Include="src\Bunny\DirectX12\TUT\D3D12HelloTriangle.cpp" />
-    <ClCompile Include="src\Bunny\DirectX12\TUT\DXSample.cpp" />
+    <ClCompile Include="src\Bunny\D3D12HelloTriangle.cpp" />
+    <ClCompile Include="src\Bunny\DXSample.cpp" />
     <ClCompile Include="src\Bunny\Helpers.cpp" />
     <ClCompile Include="src\Bunny\Log.cpp" />
-    <ClCompile Include="src\Bunny\Win32\Win32Application.cpp" />
+    <ClCompile Include="src\Bunny\Win32Application.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="src\Bunny\DirectX12\Shaders\shaders.hlsl">
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-    </FxCompile>
     <FxCompile Include="src\Bunny\DirectX12\TUT\shaders.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <DeploymentContent>true</DeploymentContent>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

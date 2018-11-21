@@ -1,4 +1,4 @@
-#include <Bunny.h>
+#include <Bunny/Bunny.h>
 
 class Sandbox : public Bunny::Application
 {
