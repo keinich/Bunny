@@ -149,6 +149,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Bunny\BunnyMath.h" />
+    <ClInclude Include="src\Bunny\Color.h" />
+    <ClInclude Include="src\Bunny\ColorBuffer.h" />
     <ClInclude Include="src\Bunny\PixelBuffer.h" />
     <ClInclude Include="src\Bunny\GpuResource.h" />
     <ClInclude Include="src\Bunny\Platform.h" />
@@ -173,6 +176,8 @@
     <ClInclude Include="src\Bunny\Win32Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Bunny\Color.cpp" />
+    <ClCompile Include="src\Bunny\ColorBuffer.cpp" />
     <ClCompile Include="src\Bunny\PixelBuffer.cpp" />
     <ClCompile Include="src\Bunny\Platform.cpp" />
     <ClCompile Include="src\Bunny\Display.cpp" />
@@ -193,6 +198,9 @@
     <FxCompile Include="src\Bunny\DirectX12\TUT\shaders.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Bunny\Functions.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

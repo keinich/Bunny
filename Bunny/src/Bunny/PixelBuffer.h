@@ -22,7 +22,7 @@ namespace Bunny {
         );
 
         void AssociateWithResource(
-          ID3D12Device* pDevice, const std::wstring& name, ID3D12Resource* pResource, D3D12_RESOURCE_STATES currentState
+          const std::wstring& name, ID3D12Resource* pResource, D3D12_RESOURCE_STATES currentState
         );
 
         void CreateTextureResource(

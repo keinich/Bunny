@@ -77,6 +77,8 @@ void D3D12HelloTriangle::LoadPipeline()
     ));
   }
 
+  Bunny::Graphics::DX12::Core::g_Device = m_device.Get();
+
   // info queue
 #if _DEBUG
   CreateInfoQueue();

@@ -283,7 +283,7 @@ namespace Bunny {
         }
       }
 
-      void PixelBuffer::AssociateWithResource(ID3D12Device* pDevice, const std::wstring& name, ID3D12Resource* pResource, D3D12_RESOURCE_STATES currentState) {
+      void PixelBuffer::AssociateWithResource(const std::wstring& name, ID3D12Resource* pResource, D3D12_RESOURCE_STATES currentState) {
         ASSERT(pResource != nullptr);
         D3D12_RESOURCE_DESC resourceDesc = pResource->GetDesc();
 

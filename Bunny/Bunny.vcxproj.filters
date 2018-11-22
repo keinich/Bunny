@@ -19,6 +19,9 @@
     <Filter Include="Bunny\Platform\Win32">
       <UniqueIdentifier>{F3CC318E-5F82-AA83-E876-A45A542BA187}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bunny\Math">
+      <UniqueIdentifier>{6510b1b7-d03e-4f18-a790-1dc926155ac6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Bunny\Core.h">
@@ -87,6 +90,15 @@
     <ClInclude Include="src\Bunny\PixelBuffer.h">
       <Filter>Bunny\Graphics\DirectX12</Filter>
     </ClInclude>
+    <ClInclude Include="src\Bunny\ColorBuffer.h">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\Color.h">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\BunnyMath.h">
+      <Filter>Bunny\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bunny\Helpers.cpp">
@@ -134,8 +146,19 @@
     <ClCompile Include="src\Bunny\PixelBuffer.cpp">
       <Filter>Bunny\Graphics\DirectX12</Filter>
     </ClCompile>
+    <ClCompile Include="src\Bunny\ColorBuffer.cpp">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\Color.cpp">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Bunny\DirectX12\TUT\shaders.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Bunny\Functions.inl">
+      <Filter>Bunny\Math</Filter>
+    </None>
   </ItemGroup>
 </Project>
