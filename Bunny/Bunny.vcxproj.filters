@@ -99,6 +99,9 @@
     <ClInclude Include="src\Bunny\BunnyMath.h">
       <Filter>Bunny\Math</Filter>
     </ClInclude>
+    <ClInclude Include="src\Bunny\DescriptorAllocator.h">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bunny\Helpers.cpp">
@@ -150,6 +153,9 @@
       <Filter>Bunny\Graphics\DirectX12</Filter>
     </ClCompile>
     <ClCompile Include="src\Bunny\Color.cpp">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\DescriptorAllocator.cpp">
       <Filter>Bunny\Graphics\DirectX12</Filter>
     </ClCompile>
   </ItemGroup>

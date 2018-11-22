@@ -149,6 +149,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Bunny\DescriptorAllocator.h" />
     <ClInclude Include="src\Bunny\BunnyMath.h" />
     <ClInclude Include="src\Bunny\Color.h" />
     <ClInclude Include="src\Bunny\ColorBuffer.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="src\Bunny\Win32Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Bunny\DescriptorAllocator.cpp" />
     <ClCompile Include="src\Bunny\Color.cpp" />
     <ClCompile Include="src\Bunny\ColorBuffer.cpp" />
     <ClCompile Include="src\Bunny\PixelBuffer.cpp" />

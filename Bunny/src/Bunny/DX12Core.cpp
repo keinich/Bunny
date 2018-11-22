@@ -8,8 +8,14 @@ namespace Bunny {
       namespace Core {
         ID3D12Device* g_Device = nullptr;
         CommandListManager g_CommandManager;
-        //uint32_t g_DisplayWidth = 1920; //TODO these are not dx-specific
-        //uint32_t g_DisplayHeight = 1080;
+
+        DescriptorAllocator g_DescriptorAllocator[D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES] =
+        {
+            D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
+            D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER,
+            D3D12_DESCRIPTOR_HEAP_TYPE_RTV,
+            D3D12_DESCRIPTOR_HEAP_TYPE_DSV,
+        };
 
       }
     }
