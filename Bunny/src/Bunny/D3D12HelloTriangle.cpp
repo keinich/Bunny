@@ -26,6 +26,7 @@ D3D12HelloTriangle::D3D12HelloTriangle(UINT width, UINT height, std::wstring nam
 void D3D12HelloTriangle::OnInit()
 {
   LoadPipeline();
+  //Bunny::Graphics::DX12::Core::Init();
   LoadAssets();
 }
 
