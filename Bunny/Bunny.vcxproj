@@ -166,6 +166,7 @@
     <ClInclude Include="src\Bunny\Helpers.h" />
     <ClInclude Include="src\Bunny\Log.h" />
     <ClInclude Include="src\Bunny\Win32Application.h" />
+    <ClInclude Include="src\Bunny\Win32Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bunny\GraphicsCore.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="src\Bunny\Helpers.cpp" />
     <ClCompile Include="src\Bunny\Log.cpp" />
     <ClCompile Include="src\Bunny\Win32Application.cpp" />
+    <ClCompile Include="src\Bunny\Win32Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Bunny\DirectX12\TUT\shaders.hlsl">

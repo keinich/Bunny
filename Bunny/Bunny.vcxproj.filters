@@ -4,9 +4,6 @@
     <Filter Include="Bunny">
       <UniqueIdentifier>{515CEB0C-BD70-13BE-86F2-B61DF2C50FEF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Bunny\Win32">
-      <UniqueIdentifier>{F3CC318E-5F82-AA83-E876-A45A542BA187}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Bunny\Graphics">
       <UniqueIdentifier>{222effc9-0c36-463e-afd1-40bd0f659022}</UniqueIdentifier>
     </Filter>
@@ -15,6 +12,12 @@
     </Filter>
     <Filter Include="Bunny\Graphics\DirectX12\Tut_D3D12HelloTriangle">
       <UniqueIdentifier>{8351af82-6b85-44a9-a6de-fad2173c5dbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bunny\Platform">
+      <UniqueIdentifier>{039dde60-52bf-46e1-9a7c-40471612bbb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bunny\Platform\Win32">
+      <UniqueIdentifier>{F3CC318E-5F82-AA83-E876-A45A542BA187}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -67,7 +70,10 @@
       <Filter>Bunny\Graphics\DirectX12</Filter>
     </ClInclude>
     <ClInclude Include="src\Bunny\Win32Application.h">
-      <Filter>Bunny\Win32</Filter>
+      <Filter>Bunny\Platform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\Win32Window.h">
+      <Filter>Bunny\Platform\Win32</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -102,7 +108,10 @@
       <Filter>Bunny\Graphics\DirectX12\Tut_D3D12HelloTriangle</Filter>
     </ClCompile>
     <ClCompile Include="src\Bunny\Win32Application.cpp">
-      <Filter>Bunny\Win32</Filter>
+      <Filter>Bunny\Platform\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\Win32Window.cpp">
+      <Filter>Bunny\Platform\Win32</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

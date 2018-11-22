@@ -14,6 +14,7 @@
 #include "DX12Core.h"
 #include "CommandListManager.h"
 #include "GraphicsCore.h"
+#include "Win32Window.h"
 
 D3D12HelloTriangle::D3D12HelloTriangle(UINT width, UINT height, std::wstring name) :
   DXSample(width, height, name),
@@ -112,7 +113,7 @@ void D3D12HelloTriangle::LoadPipeline()
   ComPtr<IDXGISwapChain1> swapChain;
   ThrowIfFailed(factory->CreateSwapChainForHwnd(
     Bunny::Graphics::DX12::Core::g_CommandManager.GetCommandQueue(),        // Swap chain needs the queue so that it can force a flush on it.
-    Bunny::Win32Application::GetHwnd(),
+    Bunny::Platform::Win32::Win32Application::GetWindow()->GetWindowHandle(),
     &swapChainDesc,
     nullptr,
     nullptr,
@@ -120,7 +121,7 @@ void D3D12HelloTriangle::LoadPipeline()
   ));
 
   // This sample does not support fullscreen transitions.
-  ThrowIfFailed(factory->MakeWindowAssociation(Bunny::Win32Application::GetHwnd(), DXGI_MWA_NO_ALT_ENTER));
+  ThrowIfFailed(factory->MakeWindowAssociation(Bunny::Platform::Win32::Win32Application::GetWindow()->GetWindowHandle(), DXGI_MWA_NO_ALT_ENTER));
 
   ThrowIfFailed(swapChain.As(&m_swapChain));
   m_frameIndex = m_swapChain->GetCurrentBackBufferIndex();

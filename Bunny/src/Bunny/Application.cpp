@@ -19,9 +19,9 @@ namespace Bunny {
 
     D3D12HelloTriangle sample(1280, 720, L"D3D12 Hello Triangle");
 
-    Win32Application::CreateWindowHandle(&sample);
+    Platform::Win32::Win32Application::Init(&sample);
     sample.OnInit();
-    Win32Application::Run();
+    Platform::Win32::Win32Application::Run();
 
     while (true);
   }

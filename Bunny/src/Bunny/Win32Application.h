@@ -6,22 +6,28 @@
 class D3D12HelloTriangle;
 
 namespace Bunny {
+  namespace Platform {
+    namespace Win32 {
 
-    class Win32Application {
-    public:
-      Win32Application();
-      ~Win32Application();
+      class Win32Application {
+        friend class Win32Window;
+      public:
+        Win32Application();
+        ~Win32Application();
 
-      static HWND GetHwnd();
+        void static Init(void* app);
+        void static Run();
 
-      void static CreateWindowHandle(D3D12HelloTriangle* app);
-      void static Run();
+        static inline Win32Window* GetWindow() { return &window_; }
 
-    protected:
-      static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+      protected:
+        static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-    private:
-      static HWND m_hWnd;
-    };
+      private:
+        static Win32Window window_;
+        static Win32Window window2_;
+      };
 
+    }
+  }
 }
