@@ -28,11 +28,8 @@ namespace Bunny {
         CD3DX12_VIEWPORT m_viewport;
         CD3DX12_RECT m_scissorRect;
         Microsoft::WRL::ComPtr<IDXGISwapChain3> m_swapChain;
-        UINT m_rtvDescriptorSize;
-        Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_rtvHeap;
-        Microsoft::WRL::ComPtr<ID3D12Resource> m_renderTargets[FrameCount];
+        UINT m_rtvDescriptorSize;        
 
-      private:
         ColorBuffer displayPlanes_[2];
       };
 

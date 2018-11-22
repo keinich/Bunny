@@ -337,9 +337,9 @@ void D3D12HelloTriangle::PopulateCommandList()
   m_commandList->RSSetScissorRects(1, &theDisplay_.m_scissorRect);
 
   // Indicate that the back buffer will be used as a render target.
-  m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(theDisplay_.m_renderTargets[theDisplay_.m_frameIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
+  m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(theDisplay_.displayPlanes_[theDisplay_.m_frameIndex].GetResource(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
 
-  CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(theDisplay_.m_rtvHeap->GetCPUDescriptorHandleForHeapStart(), theDisplay_.m_frameIndex, theDisplay_.m_rtvDescriptorSize);
+  CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(theDisplay_.displayPlanes_[0].GetRTV(), theDisplay_.m_frameIndex, theDisplay_.m_rtvDescriptorSize);
   m_commandList->OMSetRenderTargets(1, &rtvHandle, FALSE, nullptr);
 
   // Record commands.
@@ -350,7 +350,7 @@ void D3D12HelloTriangle::PopulateCommandList()
   m_commandList->DrawInstanced(3, 1, 0, 0);
 
   // Indicate that the back buffer will now be used to present.
-  m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(theDisplay_.m_renderTargets[theDisplay_.m_frameIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
+  m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(theDisplay_.displayPlanes_[theDisplay_.m_frameIndex].GetResource(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
 
   ThrowIfFailed(m_commandList->Close());
 }
