@@ -26,7 +26,11 @@ namespace Bunny {
       {
       }
 
-      void Display::Init(Microsoft::WRL::ComPtr<IDXGIFactory4> &factory, Microsoft::WRL::ComPtr<ID3D12Device> &device, Platform::PLATFORM_WINDOW* window) {
+      void Display::Init(
+        Microsoft::WRL::ComPtr<IDXGIFactory4> &factory, 
+        Microsoft::WRL::ComPtr<ID3D12Device> &device, 
+        Platform::PLATFORM_WINDOW* window
+      ) {
         // Describe and create the swap chain.
         DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
         swapChainDesc.BufferCount = FrameCount;
@@ -82,6 +86,12 @@ namespace Bunny {
             ThrowIfFailed(m_swapChain->GetBuffer(n, IID_PPV_ARGS(&m_renderTargets[n])));
             device->CreateRenderTargetView(m_renderTargets[n].Get(), nullptr, rtvHandle);
             rtvHandle.Offset(1, m_rtvDescriptorSize);
+          }
+          for (uint32_t i = 0; i < FrameCount; ++i)
+          {
+            ComPtr<ID3D12Resource> displayPlane;
+            ASSERT_SUCCEEDED(m_swapChain->GetBuffer(i, IID_PPV_ARGS(&displayPlane)));
+            displayPlanes_[i].CreateFromSwapChain(L"Primary SwapChain Buffer", displayPlane.Detach());
           }
         }
       }

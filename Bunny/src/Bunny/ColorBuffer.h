@@ -40,19 +40,19 @@ namespace Bunny {
         const D3D12_CPU_DESCRIPTOR_HANDLE& GetUAV(void) const { return uavHanlde_[0]; }
 
         Color GetClearColor(void) const { return clearColor_; }
-        void SetClearColor(Color ClearColor) { clearColor_ = ClearColor; }
+        void SetClearColor(Color clearColor) { clearColor_ = clearColor; }
 
-        void SetMsaaMode(uint32_t NumColorSamples, uint32_t NumCoverageSamples)
+        void SetMsaaMode(uint32_t numColorSamples, uint32_t numCoverageSamples)
         {
-          ASSERT(NumCoverageSamples >= NumColorSamples);
-          fragmentCount_ = NumColorSamples;
-          sampleCount_ = NumCoverageSamples;
+          ASSERT(numCoverageSamples >= numColorSamples);
+          fragmentCount_ = numColorSamples;
+          sampleCount_ = numCoverageSamples;
         }
 
         // This will work for all texture sizes, but it's recommended for speed and quality
         // that you use dimensions with powers of two (but not necessarily square.)  Pass
         // 0 for ArrayCount to reserve space for mips at creation time.
-        void GenerateMipMaps(CommandContext& Context);
+        void GenerateMipMaps(CommandContext& context);
 
       protected:
 
@@ -66,14 +66,14 @@ namespace Bunny {
           return D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET | Flags;
         }
 
-        static inline uint32_t ComputeNumMips(uint32_t Width, uint32_t Height)
+        static inline uint32_t ComputeNumMips(uint32_t width, uint32_t height)
         {
           uint32_t HighBit;
-          _BitScanReverse((unsigned long*)&HighBit, Width | Height);
+          _BitScanReverse((unsigned long*)&HighBit, width | height);
           return HighBit + 1;
         }
 
-        void CreateDerivedViews(ID3D12Device* Device, DXGI_FORMAT Format, uint32_t ArraySize, uint32_t NumMips = 1);
+        void CreateDerivedViews(ID3D12Device* pDevice, DXGI_FORMAT format, uint32_t arraySize, uint32_t numMips = 1);
 
         Color clearColor_;
         D3D12_CPU_DESCRIPTOR_HANDLE srvHanlde_;

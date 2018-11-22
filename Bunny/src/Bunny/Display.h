@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include <wrl.h>
 #include "Platform.h"
+#include "ColorBuffer.h"
 
 namespace Bunny {
   namespace Graphics {
@@ -30,6 +31,9 @@ namespace Bunny {
         UINT m_rtvDescriptorSize;
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_rtvHeap;
         Microsoft::WRL::ComPtr<ID3D12Resource> m_renderTargets[FrameCount];
+
+      private:
+        ColorBuffer displayPlanes_[2];
       };
 
     }
