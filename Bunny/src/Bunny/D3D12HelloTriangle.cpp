@@ -14,6 +14,7 @@
 #include "DX12Core.h"
 #include "CommandListManager.h"
 #include "GraphicsCore.h"
+#include "Display.h"
 #include "Win32Window.h"
 
 D3D12HelloTriangle::D3D12HelloTriangle(UINT width, UINT height, std::wstring name) :
@@ -98,8 +99,8 @@ void D3D12HelloTriangle::LoadPipeline()
 // Describe and create the swap chain.
   DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
   swapChainDesc.BufferCount = FrameCount;
-  swapChainDesc.Width = Bunny::Graphics::Core::g_DisplayWidth;
-  swapChainDesc.Height = Bunny::Graphics::Core::g_DisplayHeight;
+  swapChainDesc.Width = Bunny::Graphics::Core::g_Display.GetDisplayWidth();
+  swapChainDesc.Height = Bunny::Graphics::Core::g_Display.GetDisplayHeight();
   swapChainDesc.Format = DXGI_FORMAT_R10G10B10A2_UNORM;
   swapChainDesc.Scaling = DXGI_SCALING_NONE;
   swapChainDesc.SampleDesc.Quality = 0;

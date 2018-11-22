@@ -3,9 +3,11 @@
 
 namespace Bunny {
   namespace Graphics {
+    class Display;
+  }
+  namespace Graphics {
     namespace Core {
-      extern int32_t g_DisplayWidth;
-      extern int32_t g_DisplayHeight;
+      extern Display g_Display;
     };
   }
 }

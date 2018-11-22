@@ -75,6 +75,9 @@
     <ClInclude Include="src\Bunny\Win32Window.h">
       <Filter>Bunny\Platform\Win32</Filter>
     </ClInclude>
+    <ClInclude Include="src\Bunny\Display.h">
+      <Filter>Bunny\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bunny\Helpers.cpp">
@@ -112,6 +115,9 @@
     </ClCompile>
     <ClCompile Include="src\Bunny\Win32Window.cpp">
       <Filter>Bunny\Platform\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\Display.cpp">
+      <Filter>Bunny\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
