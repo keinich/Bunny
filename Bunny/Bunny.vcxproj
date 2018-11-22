@@ -149,6 +149,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Bunny\PixelBuffer.h" />
+    <ClInclude Include="src\Bunny\GpuResource.h" />
     <ClInclude Include="src\Bunny\Platform.h" />
     <ClInclude Include="src\Bunny\Display.h" />
     <ClInclude Include="src\Bunny\GraphicsCore.h" />
@@ -171,6 +173,7 @@
     <ClInclude Include="src\Bunny\Win32Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Bunny\PixelBuffer.cpp" />
     <ClCompile Include="src\Bunny\Platform.cpp" />
     <ClCompile Include="src\Bunny\Display.cpp" />
     <ClCompile Include="src\Bunny\GraphicsCore.cpp" />

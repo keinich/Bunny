@@ -82,7 +82,7 @@ void D3D12HelloTriangle::LoadPipeline()
   CreateInfoQueue();
 #endif
 
-  CheckTypedLoadUavSupport(); 
+  CheckTypedLoadUavSupport();
 
   // command queue
   Bunny::Graphics::DX12::Core::g_CommandManager.Create(m_device.Get());
@@ -299,7 +299,7 @@ void D3D12HelloTriangle::OnRender()
   PopulateCommandList();
 
   // Execute the command list.
-  ID3D12CommandList* ppCommandLists[] = { m_commandList.Get() };  
+  ID3D12CommandList* ppCommandLists[] = { m_commandList.Get() };
   Bunny::Graphics::DX12::Core::g_CommandManager.GetCommandQueue()->ExecuteCommandLists(_countof(ppCommandLists), ppCommandLists);
 
   // Present the frame.
