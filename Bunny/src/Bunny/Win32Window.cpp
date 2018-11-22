@@ -28,7 +28,7 @@ namespace Bunny {
         windowClass.lpszClassName = L"DXSampleClass";
         RegisterClassEx(&windowClass);
 
-        RECT windowRect = { 0,0,800,600 };
+        RECT windowRect = { 0,0,1280,720}; //TODO who sets the window dimensions first?
         AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, FALSE);
 
         m_hWnd = CreateWindow(

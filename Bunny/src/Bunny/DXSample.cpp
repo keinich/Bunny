@@ -79,7 +79,7 @@ void DXSample::GetHardwareAdapter(IDXGIFactory2* pFactory, IDXGIAdapter1** ppAda
 void DXSample::SetCustomWindowText(LPCWSTR text)
 {
   std::wstring windowText = m_title + L": " + text;
-  SetWindowText(Bunny::Platform::Win32::Win32Application::GetWindow()->GetWindowHandle(), windowText.c_str());
+  SetWindowText(Bunny::Platform::Win32::Win32Application::GetMainWindow()->GetWindowHandle(), windowText.c_str());
 }
 
 // Helper function for parsing any supplied command line args.

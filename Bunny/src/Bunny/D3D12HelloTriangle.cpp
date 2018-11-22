@@ -15,6 +15,7 @@
 #include "CommandListManager.h"
 #include "GraphicsCore.h"
 #include "Win32Window.h"
+#include "Platform.h"
 
 D3D12HelloTriangle::D3D12HelloTriangle(UINT width, UINT height, std::wstring name) :
   DXSample(width, height, name),
@@ -86,8 +87,8 @@ void D3D12HelloTriangle::LoadPipeline()
   // command queue
   Bunny::Graphics::DX12::Core::g_CommandManager.Create(m_device.Get());
 
-  // swap chain
-  theDisplay_.Init(factory, m_device);  
+  // swap chain and render target views an RTV descriptor heap is in the display
+  theDisplay_.Init(factory, m_device, Bunny::Platform::GetMainPlatformWindow());
 
   ThrowIfFailed(m_device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&m_commandAllocator)));
 }

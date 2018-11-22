@@ -78,6 +78,9 @@
     <ClInclude Include="src\Bunny\Display.h">
       <Filter>Bunny\Graphics\DirectX12</Filter>
     </ClInclude>
+    <ClInclude Include="src\Bunny\Platform.h">
+      <Filter>Bunny\Platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bunny\Helpers.cpp">
@@ -118,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="src\Bunny\Display.cpp">
       <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\Platform.cpp">
+      <Filter>Bunny\Platform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -42,7 +42,7 @@ private:
     XMFLOAT4 color;
   };
 
-  Bunny::Graphics::Display theDisplay_;
+  Bunny::Graphics::DX12::Display theDisplay_;
 
   // Pipeline objects. 
   ComPtr<ID3D12Device> m_device;

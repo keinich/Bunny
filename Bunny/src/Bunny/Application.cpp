@@ -2,6 +2,7 @@
 
 //D3D12 Test
 #include "D3D12HelloTriangle.h"
+#include "Platform.h"
 
 namespace Bunny {
 
@@ -19,9 +20,9 @@ namespace Bunny {
 
     D3D12HelloTriangle sample(1280, 720, L"D3D12 Hello Triangle");
 
-    Platform::Win32::Win32Application::Init(&sample);
+    Platform::InitPlatformApplication(&sample);
     sample.OnInit();
-    Platform::Win32::Win32Application::Run();
+    Platform::RunPlatformApplication();
 
     while (true);
   }
