@@ -14,14 +14,11 @@
 #include "DX12Core.h"
 #include "CommandListManager.h"
 #include "GraphicsCore.h"
-#include "Display.h"
 #include "Win32Window.h"
 
 D3D12HelloTriangle::D3D12HelloTriangle(UINT width, UINT height, std::wstring name) :
   DXSample(width, height, name),
-  m_frameIndex(0),
-  m_viewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height)),
-  m_scissorRect(0, 0, static_cast<LONG>(width), static_cast<LONG>(height)),
+  theDisplay_(width, height),
   m_rtvDescriptorSize(0)
 {
 }
@@ -85,47 +82,13 @@ void D3D12HelloTriangle::LoadPipeline()
   CreateInfoQueue();
 #endif
 
-  CheckTypedLoadUavSupport();
+  CheckTypedLoadUavSupport(); 
 
-  // Describe and create the command queue.
-  D3D12_COMMAND_QUEUE_DESC queueDesc = {};
-  queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
-  queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
-
+  // command queue
   Bunny::Graphics::DX12::Core::g_CommandManager.Create(m_device.Get());
 
-  //ThrowIfFailed(m_device->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&m_commandQueue)));
-
-// Describe and create the swap chain.
-  DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
-  swapChainDesc.BufferCount = FrameCount;
-  swapChainDesc.Width = Bunny::Graphics::Core::g_Display.GetDisplayWidth();
-  swapChainDesc.Height = Bunny::Graphics::Core::g_Display.GetDisplayHeight();
-  swapChainDesc.Format = DXGI_FORMAT_R10G10B10A2_UNORM;
-  swapChainDesc.Scaling = DXGI_SCALING_NONE;
-  swapChainDesc.SampleDesc.Quality = 0;
-  swapChainDesc.SampleDesc.Count = 1;
-  swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-  //swapChainDesc.BufferCount = 3;
-  swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
-  swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
-  swapChainDesc.SampleDesc.Count = 1;
-
-  ComPtr<IDXGISwapChain1> swapChain;
-  ThrowIfFailed(factory->CreateSwapChainForHwnd(
-    Bunny::Graphics::DX12::Core::g_CommandManager.GetCommandQueue(),        // Swap chain needs the queue so that it can force a flush on it.
-    Bunny::Platform::Win32::Win32Application::GetWindow()->GetWindowHandle(),
-    &swapChainDesc,
-    nullptr,
-    nullptr,
-    &swapChain
-  ));
-
-  // This sample does not support fullscreen transitions.
-  ThrowIfFailed(factory->MakeWindowAssociation(Bunny::Platform::Win32::Win32Application::GetWindow()->GetWindowHandle(), DXGI_MWA_NO_ALT_ENTER));
-
-  ThrowIfFailed(swapChain.As(&m_swapChain));
-  m_frameIndex = m_swapChain->GetCurrentBackBufferIndex();
+  // swap chain
+  theDisplay_.Init(factory);
 
   // Create descriptor heaps.
   {
@@ -146,7 +109,7 @@ void D3D12HelloTriangle::LoadPipeline()
     // Create a RTV for each frame.
     for (UINT n = 0; n < FrameCount; n++)
     {
-      ThrowIfFailed(m_swapChain->GetBuffer(n, IID_PPV_ARGS(&m_renderTargets[n])));
+      ThrowIfFailed(theDisplay_.m_swapChain->GetBuffer(n, IID_PPV_ARGS(&m_renderTargets[n])));
       m_device->CreateRenderTargetView(m_renderTargets[n].Get(), nullptr, rtvHandle);
       rtvHandle.Offset(1, m_rtvDescriptorSize);
     }
@@ -365,7 +328,7 @@ void D3D12HelloTriangle::OnRender()
   Bunny::Graphics::DX12::Core::g_CommandManager.GetCommandQueue()->ExecuteCommandLists(_countof(ppCommandLists), ppCommandLists);
 
   // Present the frame.
-  ThrowIfFailed(m_swapChain->Present(1, 0));
+  ThrowIfFailed(theDisplay_.m_swapChain->Present(1, 0));
 
   WaitForPreviousFrame();
 }
@@ -393,13 +356,13 @@ void D3D12HelloTriangle::PopulateCommandList()
 
   // Set necessary state.
   m_commandList->SetGraphicsRootSignature(m_rootSignature.Get());
-  m_commandList->RSSetViewports(1, &m_viewport);
-  m_commandList->RSSetScissorRects(1, &m_scissorRect);
+  m_commandList->RSSetViewports(1, &theDisplay_.m_viewport);
+  m_commandList->RSSetScissorRects(1, &theDisplay_.m_scissorRect);
 
   // Indicate that the back buffer will be used as a render target.
-  m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[m_frameIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
+  m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[theDisplay_.m_frameIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
 
-  CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_rtvHeap->GetCPUDescriptorHandleForHeapStart(), m_frameIndex, m_rtvDescriptorSize);
+  CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_rtvHeap->GetCPUDescriptorHandleForHeapStart(), theDisplay_.m_frameIndex, m_rtvDescriptorSize);
   m_commandList->OMSetRenderTargets(1, &rtvHandle, FALSE, nullptr);
 
   // Record commands.
@@ -410,7 +373,7 @@ void D3D12HelloTriangle::PopulateCommandList()
   m_commandList->DrawInstanced(3, 1, 0, 0);
 
   // Indicate that the back buffer will now be used to present.
-  m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[m_frameIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
+  m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[theDisplay_.m_frameIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
 
   ThrowIfFailed(m_commandList->Close());
 }
@@ -434,5 +397,5 @@ void D3D12HelloTriangle::WaitForPreviousFrame()
     WaitForSingleObject(m_fenceEvent, INFINITE);
   }
 
-  m_frameIndex = m_swapChain->GetCurrentBackBufferIndex();
+  theDisplay_.m_frameIndex = theDisplay_.m_swapChain->GetCurrentBackBufferIndex();
 }

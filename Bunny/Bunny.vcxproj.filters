@@ -76,7 +76,7 @@
       <Filter>Bunny\Platform\Win32</Filter>
     </ClInclude>
     <ClInclude Include="src\Bunny\Display.h">
-      <Filter>Bunny\Graphics</Filter>
+      <Filter>Bunny\Graphics\DirectX12</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -117,7 +117,7 @@
       <Filter>Bunny\Platform\Win32</Filter>
     </ClCompile>
     <ClCompile Include="src\Bunny\Display.cpp">
-      <Filter>Bunny\Graphics</Filter>
+      <Filter>Bunny\Graphics\DirectX12</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

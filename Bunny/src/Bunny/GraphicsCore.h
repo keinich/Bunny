@@ -7,7 +7,6 @@ namespace Bunny {
   }
   namespace Graphics {
     namespace Core {
-      extern Display g_Display;
     };
   }
 }
