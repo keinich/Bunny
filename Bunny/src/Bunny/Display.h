@@ -11,7 +11,7 @@ namespace Bunny {
       Display(UINT width, UINT height);
       ~Display();
 
-      void Init(Microsoft::WRL::ComPtr<IDXGIFactory4> &factory);
+      void Init(Microsoft::WRL::ComPtr<IDXGIFactory4> &factory, Microsoft::WRL::ComPtr<ID3D12Device> &device);
 
       inline int32_t GetWidth() { return width_; }
       inline int32_t GetHeight() { return height_; }
@@ -25,6 +25,9 @@ namespace Bunny {
       CD3DX12_VIEWPORT m_viewport;
       CD3DX12_RECT m_scissorRect;
       Microsoft::WRL::ComPtr<IDXGISwapChain3> m_swapChain;
+      UINT m_rtvDescriptorSize;
+      Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_rtvHeap;
+      Microsoft::WRL::ComPtr<ID3D12Resource> m_renderTargets[FrameCount];
     };
 
   }

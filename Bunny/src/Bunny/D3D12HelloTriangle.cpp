@@ -18,8 +18,7 @@
 
 D3D12HelloTriangle::D3D12HelloTriangle(UINT width, UINT height, std::wstring name) :
   DXSample(width, height, name),
-  theDisplay_(width, height),
-  m_rtvDescriptorSize(0)
+  theDisplay_(width, height)
 {
 }
 
@@ -88,32 +87,7 @@ void D3D12HelloTriangle::LoadPipeline()
   Bunny::Graphics::DX12::Core::g_CommandManager.Create(m_device.Get());
 
   // swap chain
-  theDisplay_.Init(factory);
-
-  // Create descriptor heaps.
-  {
-    // Describe and create a render target view (RTV) descriptor heap.
-    D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc = {};
-    rtvHeapDesc.NumDescriptors = FrameCount;
-    rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-    rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-    ThrowIfFailed(m_device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&m_rtvHeap)));
-
-    m_rtvDescriptorSize = m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-  }
-
-  // Create frame resources.
-  {
-    CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_rtvHeap->GetCPUDescriptorHandleForHeapStart());
-
-    // Create a RTV for each frame.
-    for (UINT n = 0; n < FrameCount; n++)
-    {
-      ThrowIfFailed(theDisplay_.m_swapChain->GetBuffer(n, IID_PPV_ARGS(&m_renderTargets[n])));
-      m_device->CreateRenderTargetView(m_renderTargets[n].Get(), nullptr, rtvHandle);
-      rtvHandle.Offset(1, m_rtvDescriptorSize);
-    }
-  }
+  theDisplay_.Init(factory, m_device);  
 
   ThrowIfFailed(m_device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&m_commandAllocator)));
 }
@@ -244,7 +218,7 @@ void D3D12HelloTriangle::LoadAssets()
     psoDesc.SampleMask = UINT_MAX;
     psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
     psoDesc.NumRenderTargets = 1;
-    psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
+    psoDesc.RTVFormats[0] = DXGI_FORMAT_R10G10B10A2_UNORM;
     psoDesc.SampleDesc.Count = 1;
     ThrowIfFailed(m_device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&m_pipelineState)));
   }
@@ -360,9 +334,9 @@ void D3D12HelloTriangle::PopulateCommandList()
   m_commandList->RSSetScissorRects(1, &theDisplay_.m_scissorRect);
 
   // Indicate that the back buffer will be used as a render target.
-  m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[theDisplay_.m_frameIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
+  m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(theDisplay_.m_renderTargets[theDisplay_.m_frameIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
 
-  CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_rtvHeap->GetCPUDescriptorHandleForHeapStart(), theDisplay_.m_frameIndex, m_rtvDescriptorSize);
+  CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(theDisplay_.m_rtvHeap->GetCPUDescriptorHandleForHeapStart(), theDisplay_.m_frameIndex, theDisplay_.m_rtvDescriptorSize);
   m_commandList->OMSetRenderTargets(1, &rtvHandle, FALSE, nullptr);
 
   // Record commands.
@@ -373,7 +347,7 @@ void D3D12HelloTriangle::PopulateCommandList()
   m_commandList->DrawInstanced(3, 1, 0, 0);
 
   // Indicate that the back buffer will now be used to present.
-  m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_renderTargets[theDisplay_.m_frameIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
+  m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(theDisplay_.m_renderTargets[theDisplay_.m_frameIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
 
   ThrowIfFailed(m_commandList->Close());
 }

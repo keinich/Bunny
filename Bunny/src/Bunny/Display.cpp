@@ -16,7 +16,8 @@ namespace Bunny {
       height_(height),
       m_frameIndex(0),
       m_viewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height)),
-      m_scissorRect(0, 0, static_cast<LONG>(width), static_cast<LONG>(height))
+      m_scissorRect(0, 0, static_cast<LONG>(width), static_cast<LONG>(height)),
+      m_rtvDescriptorSize(0)
     {
     }
 
@@ -24,8 +25,7 @@ namespace Bunny {
     {
     }
 
-    void Display::Init(Microsoft::WRL::ComPtr<IDXGIFactory4> &factory)
-    {
+    void Display::Init(Microsoft::WRL::ComPtr<IDXGIFactory4> &factory, Microsoft::WRL::ComPtr<ID3D12Device> &device) {
       // Describe and create the swap chain.
       DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
       swapChainDesc.BufferCount = FrameCount;
@@ -39,8 +39,8 @@ namespace Bunny {
       //swapChainDesc.BufferCount = 3;
       swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
       swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
-      swapChainDesc.SampleDesc.Count = 1;
 
+      //TODO this is for win32
       ComPtr<IDXGISwapChain1> swapChain;
       Helpers::ThrowIfFailed(factory->CreateSwapChainForHwnd(
         Bunny::Graphics::DX12::Core::g_CommandManager.GetCommandQueue(),        // Swap chain needs the queue so that it can force a flush on it.
@@ -56,6 +56,31 @@ namespace Bunny {
 
       Helpers::ThrowIfFailed(swapChain.As(&m_swapChain));
       m_frameIndex = m_swapChain->GetCurrentBackBufferIndex();
+
+      // Create descriptor heaps.
+      {
+        // Describe and create a render target view (RTV) descriptor heap.
+        D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc = {};
+        rtvHeapDesc.NumDescriptors = FrameCount;
+        rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+        rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+        ThrowIfFailed(device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&m_rtvHeap)));
+
+        m_rtvDescriptorSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+      }
+
+      // Create frame resources.
+      {
+        CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_rtvHeap->GetCPUDescriptorHandleForHeapStart());
+
+        // Create a RTV for each frame.
+        for (UINT n = 0; n < FrameCount; n++)
+        {
+          ThrowIfFailed(m_swapChain->GetBuffer(n, IID_PPV_ARGS(&m_renderTargets[n])));
+          device->CreateRenderTargetView(m_renderTargets[n].Get(), nullptr, rtvHandle);
+          rtvHandle.Offset(1, m_rtvDescriptorSize);
+        }
+      }
     }
   }
 }
