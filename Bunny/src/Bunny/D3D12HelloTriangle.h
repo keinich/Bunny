@@ -45,7 +45,7 @@ private:
   Bunny::Graphics::DX12::Display theDisplay_;
 
   // Pipeline objects. 
-  ComPtr<ID3D12Device> m_device;
+  //ComPtr<ID3D12Device> m_device;
   ComPtr<ID3D12CommandAllocator> m_commandAllocator;
   ComPtr<ID3D12RootSignature> m_rootSignature;
   ComPtr<ID3D12PipelineState> m_pipelineState;

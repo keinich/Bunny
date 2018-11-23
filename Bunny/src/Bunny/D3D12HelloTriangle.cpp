@@ -17,6 +17,8 @@
 #include "Win32Window.h"
 #include "Platform.h"
 
+using namespace Bunny::Graphics::DX12::Core;
+
 D3D12HelloTriangle::D3D12HelloTriangle(UINT width, UINT height, std::wstring name) :
   DXSample(width, height, name),
   theDisplay_(width, height)
@@ -55,6 +57,7 @@ void D3D12HelloTriangle::LoadPipeline()
   ThrowIfFailed(CreateDXGIFactory2(dxgiFactoryFlags, IID_PPV_ARGS(&factory)));
 
   // device
+  ComPtr<ID3D12Device> device;
   if (m_useWarpDevice)
   {
     ComPtr<IDXGIAdapter> warpAdapter;
@@ -63,7 +66,7 @@ void D3D12HelloTriangle::LoadPipeline()
     ThrowIfFailed(D3D12CreateDevice(
       warpAdapter.Get(),
       D3D_FEATURE_LEVEL_11_0,
-      IID_PPV_ARGS(&m_device)
+      IID_PPV_ARGS(&device)
     ));
   }
   else
@@ -74,11 +77,11 @@ void D3D12HelloTriangle::LoadPipeline()
     ThrowIfFailed(D3D12CreateDevice(
       hardwareAdapter.Get(),
       D3D_FEATURE_LEVEL_11_0,
-      IID_PPV_ARGS(&m_device)
+      IID_PPV_ARGS(&device)
     ));
   }
 
-  Bunny::Graphics::DX12::Core::g_Device = m_device.Get();
+  Bunny::Graphics::DX12::Core::g_Device = device.Get();
 
   // info queue
 #if _DEBUG
@@ -88,18 +91,18 @@ void D3D12HelloTriangle::LoadPipeline()
   CheckTypedLoadUavSupport();
 
   // command queue
-  Bunny::Graphics::DX12::Core::g_CommandManager.Create(m_device.Get());
+  Bunny::Graphics::DX12::Core::g_CommandManager.Create(g_Device);
 
   // swap chain and render target views an RTV descriptor heap is in the display
-  theDisplay_.Init(factory, m_device, Bunny::Platform::GetMainPlatformWindow());
+  theDisplay_.Init(factory, device, Bunny::Platform::GetMainPlatformWindow());
 
-  ThrowIfFailed(m_device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&m_commandAllocator)));
+  ThrowIfFailed(g_Device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&m_commandAllocator)));
 }
 
 void D3D12HelloTriangle::CheckTypedLoadUavSupport()
 {
   D3D12_FEATURE_DATA_D3D12_OPTIONS FeatureData = {};
-  if (SUCCEEDED(m_device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS, &FeatureData, sizeof(FeatureData))))
+  if (SUCCEEDED(g_Device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS, &FeatureData, sizeof(FeatureData))))
   {
     if (FeatureData.TypedUAVLoadAdditionalFormats)
     {
@@ -108,7 +111,7 @@ void D3D12HelloTriangle::CheckTypedLoadUavSupport()
         DXGI_FORMAT_R11G11B10_FLOAT, D3D12_FORMAT_SUPPORT1_NONE, D3D12_FORMAT_SUPPORT2_NONE
       };
 
-      if (SUCCEEDED(m_device->CheckFeatureSupport(D3D12_FEATURE_FORMAT_SUPPORT, &Support, sizeof(Support))) &&
+      if (SUCCEEDED(g_Device->CheckFeatureSupport(D3D12_FEATURE_FORMAT_SUPPORT, &Support, sizeof(Support))) &&
         (Support.Support2 & D3D12_FORMAT_SUPPORT2_UAV_TYPED_LOAD) != 0)
       {
         m_bTypedUAVLoadSupport_R11G11B10_FLOAT = true;
@@ -116,7 +119,7 @@ void D3D12HelloTriangle::CheckTypedLoadUavSupport()
 
       Support.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
 
-      if (SUCCEEDED(m_device->CheckFeatureSupport(D3D12_FEATURE_FORMAT_SUPPORT, &Support, sizeof(Support))) &&
+      if (SUCCEEDED(g_Device->CheckFeatureSupport(D3D12_FEATURE_FORMAT_SUPPORT, &Support, sizeof(Support))) &&
         (Support.Support2 & D3D12_FORMAT_SUPPORT2_UAV_TYPED_LOAD) != 0)
       {
         m_bTypedUAVLoadSupport_R11G11B10_FLOAT = true;
@@ -128,7 +131,7 @@ void D3D12HelloTriangle::CheckTypedLoadUavSupport()
 void D3D12HelloTriangle::CreateInfoQueue()
 {
   ID3D12InfoQueue* pInfoQueue = nullptr;
-  if (SUCCEEDED(m_device->QueryInterface(IID_PPV_ARGS(&pInfoQueue))))
+  if (SUCCEEDED(g_Device->QueryInterface(IID_PPV_ARGS(&pInfoQueue))))
   {
     // Suppress whole categories of messages
     //D3D12_MESSAGE_CATEGORY Categories[] = {};
@@ -184,7 +187,7 @@ void D3D12HelloTriangle::LoadAssets()
     ComPtr<ID3DBlob> signature;
     ComPtr<ID3DBlob> error;
     ThrowIfFailed(D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, &signature, &error));
-    ThrowIfFailed(m_device->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&m_rootSignature)));
+    ThrowIfFailed(g_Device->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&m_rootSignature)));
   }
 
   // Create the pipeline state, which includes compiling and loading shaders.
@@ -224,12 +227,13 @@ void D3D12HelloTriangle::LoadAssets()
     psoDesc.NumRenderTargets = 1;
     psoDesc.RTVFormats[0] = DXGI_FORMAT_R10G10B10A2_UNORM;
     psoDesc.SampleDesc.Count = 1;
-    ThrowIfFailed(m_device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&m_pipelineState)));
+    ThrowIfFailed(g_Device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&m_pipelineState)));
   }
 
   // Create the command list.
-  ThrowIfFailed(m_device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, m_commandAllocator.Get(), m_pipelineState.Get(), IID_PPV_ARGS(&m_commandList)));
-
+  ThrowIfFailed(g_Device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, m_commandAllocator.Get(), m_pipelineState.Get(), IID_PPV_ARGS(&m_commandList)));
+  Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator;
+  //g_CommandManager.CreateNewCommandList(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&m_commandList), IID_PPV_ARGS(&commandAllocator));
   // Command lists are created in the recording state, but there is nothing
   // to record yet. The main loop expects it to be closed, so close it now.
   ThrowIfFailed(m_commandList->Close());
@@ -250,7 +254,7 @@ void D3D12HelloTriangle::LoadAssets()
     // recommended. Every time the GPU needs it, the upload heap will be marshalled 
     // over. Please read up on Default Heap usage. An upload heap is used here for 
     // code simplicity and because there are very few verts to actually transfer.
-    ThrowIfFailed(m_device->CreateCommittedResource(
+    ThrowIfFailed(g_Device->CreateCommittedResource(
       &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
       D3D12_HEAP_FLAG_NONE,
       &CD3DX12_RESOURCE_DESC::Buffer(vertexBufferSize),
@@ -273,7 +277,7 @@ void D3D12HelloTriangle::LoadAssets()
 
   // Create synchronization objects and wait until assets have been uploaded to the GPU.
   {
-    ThrowIfFailed(m_device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&m_fence)));
+    ThrowIfFailed(g_Device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&m_fence)));
     m_fenceValue = 1;
 
     // Create an event handle to use for frame synchronization.
