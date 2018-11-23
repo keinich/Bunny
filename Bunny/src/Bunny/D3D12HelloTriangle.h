@@ -13,6 +13,7 @@
 
 #include "DXSample.h"
 #include "Display.h"
+#include "RootSignature.h"
 
 using namespace DirectX;
 
@@ -46,8 +47,9 @@ private:
 
   // Pipeline objects. 
   //ComPtr<ID3D12Device> m_device;
-  ComPtr<ID3D12CommandAllocator> m_commandAllocator;
-  ComPtr<ID3D12RootSignature> m_rootSignature;
+  ComPtr<ID3D12CommandAllocator> m_commandAllocator;  
+  Bunny::Graphics::DX12::RootSignature rootSignature_;
+
   ComPtr<ID3D12PipelineState> m_pipelineState;
   ComPtr<ID3D12GraphicsCommandList> m_commandList;
 

@@ -181,13 +181,8 @@ void D3D12HelloTriangle::LoadAssets()
 {
   // Create an empty root signature.
   {
-    CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc;
-    rootSignatureDesc.Init(0, nullptr, 0, nullptr, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
-
-    ComPtr<ID3DBlob> signature;
-    ComPtr<ID3DBlob> error;
-    ThrowIfFailed(D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, &signature, &error));
-    ThrowIfFailed(g_Device->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&m_rootSignature)));
+    rootSignature_.Reset(0);
+    rootSignature_.Finalize(L"Main RootSignature", D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
   }
 
   // Create the pipeline state, which includes compiling and loading shaders.
@@ -215,7 +210,7 @@ void D3D12HelloTriangle::LoadAssets()
     // Describe and create the graphics pipeline state object (PSO).
     D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {};
     psoDesc.InputLayout = { inputElementDescs, _countof(inputElementDescs) };
-    psoDesc.pRootSignature = m_rootSignature.Get();
+    psoDesc.pRootSignature = rootSignature_.GetSignature();
     psoDesc.VS = CD3DX12_SHADER_BYTECODE(vertexShader.Get());
     psoDesc.PS = CD3DX12_SHADER_BYTECODE(pixelShader.Get());
     psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
@@ -337,7 +332,7 @@ void D3D12HelloTriangle::PopulateCommandList()
   ThrowIfFailed(m_commandList->Reset(m_commandAllocator.Get(), m_pipelineState.Get()));
 
   // Set necessary state.
-  m_commandList->SetGraphicsRootSignature(m_rootSignature.Get());
+  m_commandList->SetGraphicsRootSignature(rootSignature_.GetSignature());
   m_commandList->RSSetViewports(1, &theDisplay_.m_viewport);
   m_commandList->RSSetScissorRects(1, &theDisplay_.m_scissorRect);
 
