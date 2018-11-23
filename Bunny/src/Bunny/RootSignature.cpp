@@ -1,5 +1,7 @@
 #include "RootSignature.h"
 #include <map>
+#include "Hash.h"
+#include "DX12Core.h"
 
 namespace Bunny {
   namespace Graphics {
@@ -95,7 +97,72 @@ namespace Bunny {
         descriptorTableBitMap_ = 0;
         samplerTableBitMap_ = 0;
 
-        //size_t hashCode = 
+        size_t hashCode = Math::HashState(&rootDesc.Flags);
+        hashCode = Math::HashState(rootDesc.pStaticSamplers, numSamplers_, hashCode);
+
+        for (UINT param = 0; param < numParameters_; ++param) {
+          const D3D12_ROOT_PARAMETER& rootParam = rootDesc.pParameters[param];
+          descriptorTableSize_[param] = 0;
+
+          if (rootParam.ParameterType == D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE) {
+            ASSERT(rootParam.DescriptorTable.pDescriptorRanges != nullptr);
+
+            hashCode = Math::HashState(
+              rootParam.DescriptorTable.pDescriptorRanges, rootParam.DescriptorTable.NumDescriptorRanges, hashCode
+            );
+
+            if (rootParam.DescriptorTable.pDescriptorRanges->RangeType == D3D12_DESCRIPTOR_RANGE_TYPE_SAMPLER)
+              samplerTableBitMap_ |= (1 << param);
+            else
+              descriptorTableBitMap_ |= (1 << param);
+
+            for (UINT tableRange = 0; tableRange < rootParam.DescriptorTable.NumDescriptorRanges; ++tableRange)
+              descriptorTableSize_[param] += rootParam.DescriptorTable.pDescriptorRanges[tableRange].NumDescriptors;
+          }
+          else {
+            hashCode = Math::HashState(&rootParam, 1, hashCode);
+          }
+        }
+
+        ID3D12RootSignature** rsRef = nullptr;
+        bool firstCompile = false;
+        {
+          static std::mutex s_HashMapMutex;
+          std::lock_guard<std::mutex> CS(s_HashMapMutex);
+          auto iter = gs_RootSignatureHashMap.find(hashCode);
+
+          if (iter == gs_RootSignatureHashMap.end()) {
+            rsRef = gs_RootSignatureHashMap[hashCode].GetAddressOf();
+            firstCompile = true;
+          }
+          else {
+            rsRef = iter->second.GetAddressOf();
+          }
+        }
+
+        if (firstCompile) {
+          Microsoft::WRL::ComPtr<ID3DBlob> pOutBlob, pErrorBlob;
+
+          ASSERT_SUCCEEDED(
+            D3D12SerializeRootSignature(&rootDesc, D3D_ROOT_SIGNATURE_VERSION_1, pOutBlob.GetAddressOf(), pErrorBlob.GetAddressOf())
+          );
+
+          ASSERT_SUCCEEDED(
+            Core::g_Device->CreateRootSignature(1, pOutBlob->GetBufferPointer(), pOutBlob->GetBufferSize(), IID_PPV_ARGS(&signature_))
+          );
+
+          signature_->SetName(name.c_str());
+
+          gs_RootSignatureHashMap[hashCode].Attach(signature_);
+          ASSERT(*rsRef == signature_);
+        }
+        else {
+          while (*rsRef == nullptr)
+            std::this_thread::yield();
+          signature_ = *rsRef;
+        }
+
+        finalized_ = TRUE;
 
       }
     }

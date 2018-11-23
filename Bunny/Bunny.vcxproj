@@ -149,6 +149,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Bunny\Hash.h" />
     <ClInclude Include="src\Bunny\RootParameter.h" />
     <ClInclude Include="src\Bunny\RootSignature.h" />
     <ClInclude Include="src\Bunny\DescriptorAllocator.h" />

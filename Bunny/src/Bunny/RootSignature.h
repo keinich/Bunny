@@ -21,7 +21,7 @@ namespace Bunny {
         void Reset(UINT numRootParams, UINT numStaticSamplers = 0);
 
         RootParameter& operator[] (size_t entryIndex){
-          ASSERT(eintryIndex < numParameters_);
+          ASSERT(entryIndex < numParameters_);
         return paramArray_.get()[entryIndex];
         }
 
