@@ -149,6 +149,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Bunny\RootParameter.h" />
+    <ClInclude Include="src\Bunny\RootSignature.h" />
     <ClInclude Include="src\Bunny\DescriptorAllocator.h" />
     <ClInclude Include="src\Bunny\BunnyMath.h" />
     <ClInclude Include="src\Bunny\Color.h" />
@@ -177,6 +179,8 @@
     <ClInclude Include="src\Bunny\Win32Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Bunny\RootParameter.cpp" />
+    <ClCompile Include="src\Bunny\RootSignature.cpp" />
     <ClCompile Include="src\Bunny\DescriptorAllocator.cpp" />
     <ClCompile Include="src\Bunny\Color.cpp" />
     <ClCompile Include="src\Bunny\ColorBuffer.cpp" />

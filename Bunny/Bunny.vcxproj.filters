@@ -102,6 +102,12 @@
     <ClInclude Include="src\Bunny\DescriptorAllocator.h">
       <Filter>Bunny\Graphics\DirectX12</Filter>
     </ClInclude>
+    <ClInclude Include="src\Bunny\RootSignature.h">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bunny\RootParameter.h">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bunny\Helpers.cpp">
@@ -156,6 +162,12 @@
       <Filter>Bunny\Graphics\DirectX12</Filter>
     </ClCompile>
     <ClCompile Include="src\Bunny\DescriptorAllocator.cpp">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\RootSignature.cpp">
+      <Filter>Bunny\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bunny\RootParameter.cpp">
       <Filter>Bunny\Graphics\DirectX12</Filter>
     </ClCompile>
   </ItemGroup>
